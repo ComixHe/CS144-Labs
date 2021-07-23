@@ -1,14 +1,10 @@
 # CS144-Labs
 
----
-
->   Stanford CS144 Lab Assignments ,Fall 2020
+>   Stanford CS144 Lab Assignments ,Fall 2020.
 >
 >   This is [official website](https://cs144.github.io/)
 
 &nbsp;&nbsp; please switch branches to view the Lab 0 to Lab 7. 
-
----
 
 ## Lab 0: network warmup
 
