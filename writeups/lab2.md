@@ -1,4 +1,4 @@
-Lab 0 Writeup
+Lab 2 Writeup
 =============
 
 My name: [your name here]
@@ -7,7 +7,16 @@ My SUNet ID: [your sunetid here]
 
 This lab took me about [n] hours to do. I [did/did not] attend the lab session.
 
-My secret code from section 2.1 was: [code here]
+I worked with or talked about this assignment with: [please list other sunetids]
+
+Program Structure and Design of the TCPReceiver and wrap/unwrap routines:
+[]
+
+Implementation Challenges:
+[]
+
+Remaining Bugs:
+[]
 
 - Optional: I had unexpected difficulty with: [describe]
 
