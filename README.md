@@ -6,7 +6,7 @@
 
 &nbsp;&nbsp; please switch branches to view the Lab 0 to Lab 7. 
 
-## Lab 2: The TCP Sender
+## Lab 3: The TCP Sender
 
 key files: tcp_sender.cc tcp_sender.hh
 
