@@ -1,4 +1,4 @@
-Lab 2 Writeup
+Lab 3 Writeup
 =============
 
 My name: [your name here]
@@ -9,7 +9,7 @@ This lab took me about [n] hours to do. I [did/did not] attend the lab session.
 
 I worked with or talked about this assignment with: [please list other sunetids]
 
-Program Structure and Design of the TCPReceiver and wrap/unwrap routines:
+Program Structure and Design of the TCPSender:
 []
 
 Implementation Challenges:

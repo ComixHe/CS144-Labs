@@ -7,7 +7,7 @@
 
 // You will need to add private members to the class declaration in `byte_stream.hh`
 
-ByteStream::ByteStream(const size_t capacity):_capacity(capacity){}
+ByteStream::ByteStream(const size_t capacity):_capacity(capacity) {}
 
 size_t ByteStream::write(const std::string &data) {
     size_t write_count {0};

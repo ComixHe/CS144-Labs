@@ -42,11 +42,9 @@ int main() {
 
             string d(offset, 0);
             generate(d.begin(), d.end(), [&] { return rd(); });
-            //int count=0;
+
             for (auto [off, sz] : seq_size) {
                 string dd(d.cbegin() + off, d.cbegin() + off + sz);
-                //std::cout<<count<<" ";
-                //++count;
                 buf.push_substring(move(dd), off, off + sz == offset);
             }
 
