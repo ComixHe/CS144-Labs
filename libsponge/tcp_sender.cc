@@ -32,7 +32,7 @@ void TCPSender::fill_window() { //策略是一次性尽可能发送更多数据
         _segments_out.push(new_seg);
         _segments_outstanding.push(new_seg);
     } else if(_stream.eof()) {
-        //发送fin
+        //数据发送完毕，主动关闭连接，发送fin
         TCPSegment new_seg;
         _sent_fin = true;
         new_seg.header().fin = true;
@@ -73,6 +73,8 @@ void TCPSender::fill_window() { //策略是一次性尽可能发送更多数据
 //处理接收方的ack，处理窗口大小和接收确认，判断重传等
 void TCPSender::ack_received(const WrappingInt32 ackno, const uint16_t window_size) {
     auto rec_ack = unwrap(ackno,_isn,_send_base);
+    if(!_ack_valid(rec_ack))
+        return;
     //处理握手syn的ack
     if(_send_base == 0 && rec_ack == 1) { //双端都以自己接到的第一个ack进行处理
         _send_base = 1;
@@ -131,9 +133,14 @@ void TCPSender::tick(const size_t ms_since_last_tick){ //回退N步
     return;
 }
 
-void TCPSender::send_empty_segment() { //用来发送ack，但在真实tcp中，ack可携带数据
+void TCPSender::send_empty_segment() {
     TCPSegment empty_seg;
     empty_seg.header().seqno = wrap(_next_seqno,_isn);
     empty_seg.payload() = {};
     _segments_out.push(empty_seg);
+}
+
+bool TCPSender::_ack_valid(uint64_t abs_ackno) const{ //lab4新加测试，需要验证ackno是否违规
+    return abs_ackno <= _next_seqno &&
+           abs_ackno >= unwrap(_segments_outstanding.front().header().seqno, _isn, _next_seqno);
 }

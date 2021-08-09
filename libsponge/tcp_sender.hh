@@ -38,6 +38,8 @@ class TCPSender {
     //! outgoing stream of bytes that have not yet been sent
     ByteStream _stream;
 
+    bool _ack_valid(uint64_t abs_ackno) const;
+
   public:
     //! Initialize a TCPSender
     TCPSender(const size_t capacity = TCPConfig::DEFAULT_CAPACITY,
@@ -49,7 +51,7 @@ class TCPSender {
     ByteStream &stream_in() { return _stream; }
     const ByteStream &stream_in() const { return _stream; }
     //!@}
-
+    size_t get_elapsed_time() const { return _time_elapsed; }
     //! \name Methods that can cause the TCPSender to send a segment
     //!@{
 
