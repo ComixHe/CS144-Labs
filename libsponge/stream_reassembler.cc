@@ -70,9 +70,9 @@ void StreamReassembler::push_substring(const std::string &data, const uint64_t i
             if(it->begin_index + it->data.length() >= _first_unassembled){
                 tmp_string = it->data.substr(_first_unassembled - it->begin_index);
                 _output.write(tmp_string);
-                _first_unassembled += tmp_string.length();
-                _bytes_unassembled -= it->data.length();
+                _first_unassembled += tmp_string.length();  
             }
+            _bytes_unassembled -= it->data.length();
             it = _waiting.erase(it);
         }
     } 
