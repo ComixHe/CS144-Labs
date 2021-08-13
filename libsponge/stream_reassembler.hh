@@ -4,33 +4,35 @@
 #include "byte_stream.hh"
 #include <cstdint>
 #include <set>
+#
 
 //! \brief A class that assembles a series of excerpts from a byte stream (possibly out of order,
 //! possibly overlapping) into an in-order byte stream.
 class StreamReassembler {
   private:
-  struct seg
-  {
-        std::string data;
-        uint64_t index;
-        seg(std::string s, uint64_t x) : data(std::move(s)), index(x) {}
-        bool operator<(const seg& b) const { return this->index < b.index; }
-  };
+    struct seg
+    {
+      std::string data{};
+      uint64_t begin_index{0};
+      bool operator<(const seg& b) const { return begin_index < b.begin_index; }
+      seg(const std::string& new_data,uint64_t new_index):data(new_data),begin_index(new_index){}
+      seg() = default;
+    };
 
     // Your code here -- add private members as necessary.
     ByteStream _output;  //!< The reassembled in-order byte stream
     uint64_t _capacity;    //!< The maximum number of bytes
-    uint64_t _bytes_unassembled;
+    size_t _bytes_unassembled{0};
     std::set<seg> _waiting{};
-    bool _eof;
-    uint64_t _eof_pos;
-    void _insert_waiting(const seg &node);
+    bool _eof_flag{false};
+    size_t _eof_pos{0};
+    void _insert_waiting(seg &node);
   
   public:
     //! \brief Construct a `StreamReassembler` that will store up to `capacity` bytes.
     //! \note This capacity limits both the bytes that have been reassembled,
     //! and those that have not yet been reassembled.
-    StreamReassembler(const uint64_t capacity);
+    StreamReassembler(const size_t capacity);
 
     //! \brief Receive a substring and write any newly contiguous bytes into the stream.
     //!
@@ -52,13 +54,7 @@ class StreamReassembler {
     //!
     //! \note If the byte at a particular index has been pushed more than once, it
     //! should only be counted once for the purpose of this function.
-    uint64_t unassembled_bytes() const;
-
-    uint64_t first_unassembled() const {return _output.bytes_written();}
-
-    uint64_t first_unread() const {return _output.bytes_read();}
-
-    uint64_t first_unaccept() const {return _output.bytes_read() + _capacity;}
+    size_t unassembled_bytes() const;
 
     //! \brief Is the internal state empty (other than the output stream)?
     //! \returns `true` if no substrings are waiting to be assembled

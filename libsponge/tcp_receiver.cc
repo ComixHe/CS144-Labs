@@ -4,7 +4,7 @@
 // automated checks run by `make check_lab2`.
 
 void TCPReceiver::segment_received(const TCPSegment &seg) {
-    auto header = seg.header();
+    auto& header = seg.header();
     if(header.syn) //开始同步，设定isn
         _isn = WrappingInt32(header.seqno); 
     if(!_isn.has_value())
@@ -23,4 +23,4 @@ std::optional<WrappingInt32> TCPReceiver::ackno() const {
     return WrappingInt32(wrap(_reassembler.stream_out().bytes_written() + 1,_isn.value())); //没结束则偏移一字节
 }
 
-size_t TCPReceiver::window_size() const { return _reassembler.first_unaccept() - _reassembler.first_unassembled(); } //接收窗口大小
+size_t TCPReceiver::window_size() const { return _capacity - stream_out().buffer_size(); } //接收窗口大小

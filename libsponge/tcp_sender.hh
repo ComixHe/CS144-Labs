@@ -24,11 +24,12 @@ class TCPSender {
     uint16_t _window_size{1}; 
     //! retransmission timer for the connection
     unsigned int _initial_retransmission_timeout;
-    unsigned int _retransmission_timeout;
+    unsigned int _retransmission_timeout{0};
     unsigned int _consecutive_retransmissions{0};
     //! the (absolute) sequence number for the next byte to be sent
     uint64_t _next_seqno{0};
     uint64_t _send_base{0};
+    uint64_t _bytes_in_flight{0};
     size_t _time_elapsed{0}; //简单计时器，真正tcp使用系统时钟
     //! our initial sequence number, the number for our SYN.
     WrappingInt32 _isn;
@@ -37,6 +38,8 @@ class TCPSender {
     std::queue<TCPSegment> _segments_outstanding{};
     //! outgoing stream of bytes that have not yet been sent
     ByteStream _stream;
+
+    void process_segment(TCPSegment &);
 
   public:
     //! Initialize a TCPSender
@@ -49,7 +52,6 @@ class TCPSender {
     ByteStream &stream_in() { return _stream; }
     const ByteStream &stream_in() const { return _stream; }
     //!@}
-
     //! \name Methods that can cause the TCPSender to send a segment
     //!@{
 
@@ -72,7 +74,7 @@ class TCPSender {
     //! \brief How many sequence numbers are occupied by segments sent but not yet acknowledged?
     //! \note count is in "sequence space," i.e. SYN and FIN each count for one byte
     //! (see TCPSegment::length_in_sequence_space())
-    size_t bytes_in_flight() const { return _next_seqno - _send_base; };
+    size_t bytes_in_flight() const { return _bytes_in_flight; };
 
     //! \brief Number of consecutive retransmissions that have occurred in a row
     unsigned int consecutive_retransmissions() const { return _consecutive_retransmissions; };
