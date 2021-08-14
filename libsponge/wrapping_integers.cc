@@ -20,6 +20,6 @@ WrappingInt32 wrap(uint64_t n, WrappingInt32 isn) { return isn + (n % (1UL << 32
 //! has a different ISN.
 uint64_t unwrap(WrappingInt32 n, WrappingInt32 isn, uint64_t checkpoint) { //checkpoint: 本地流中最后一个重组字节的index
     auto distance = n - wrap(checkpoint,isn); //放入同一范围内计算,计算两点之间距离，正右负左
-    int64_t location = checkpoint + distance; //计算n真正的位置，有一种情况是checkpoint在isn附近，且distance为负
-    return location >= 0 ? location : location + (1UL << 32); //则n在上一个回环中，所以要加上2^32。
+    int64_t location = checkpoint + distance; //计算n真正的位置，n有可能为负（溢出），则distance为负
+    return location >= 0 ? location : location + (1UL << 32); //此时locationwei，所以要加上2^32。
 } //另一种通过两个点定位n的比这个复杂，不采用
