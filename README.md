@@ -6,7 +6,7 @@
 
 &nbsp;&nbsp; please switch branches to view the Lab 0 to Lab 7. 
 
-## Lab 3: The summit (TCP in full)
+## Lab 4: The summit (TCP in full)
 
 key files: tcp_connection.hh tcp_connection.cc
 
