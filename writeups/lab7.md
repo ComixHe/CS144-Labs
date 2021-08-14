@@ -1,19 +1,26 @@
-Lab 6 Writeup
+Lab 7 Writeup
 =============
 
 My name: [your name here]
 
 My SUNet ID: [your sunetid here]
 
+My lab partner's SUNet ID: [your sunetid here]
+
+I also worked with or collaborated with: [their sunetids here]
+
 This lab took me about [n] hours to do. I [did/did not] attend the lab session.
 
-Program Structure and Design of the Router:
+Solo portion:
 []
 
-Implementation Challenges:
+Group portion:
 []
 
-Remaining Bugs:
+Creative portion (optional):
+[]
+
+Other remarks:
 []
 
 - Optional: I had unexpected difficulty with: [describe]
