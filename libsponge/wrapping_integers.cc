@@ -19,7 +19,7 @@ WrappingInt32 wrap(uint64_t n, WrappingInt32 isn) { return isn + (n % (1UL << 32
 //! and the other stream runs from the remote TCPSender to the local TCPReceiver and
 //! has a different ISN.
 uint64_t unwrap(WrappingInt32 n, WrappingInt32 isn, uint64_t checkpoint) { //checkpoint: 本地流中最后一个重组字节的index
-    auto distance = n - wrap(checkpoint,isn); //放入同一范围内计算,计算两点之间距离，正右负左
-    int64_t location = checkpoint + distance; //计算n真正的位置，有一种情况是checkpoint在isn附近，且distance为负
-    return location >= 0 ? location : location + (1UL << 32); //则n在上一个回环中，所以要加上2^32。
+    auto distance = n - wrap(checkpoint,isn); //放入同一范围内计算,计算两点之间距离
+    int64_t location = checkpoint + distance; //计算n真正的位置
+    return location >= 0 ? location : location + (1UL << 32); //大多数情况下可以直接计算，但有一种情况是checkpoint在0的左边，接收的n在0的右边，这样location会是负数
 } //另一种通过两个点定位n的比这个复杂，不采用
