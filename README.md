@@ -3,6 +3,8 @@
 >   Stanford CS144 Lab Assignments ,Fall 2020.
 >
 >   This is [official website](https://cs144.github.io/)
+>
+>   Env: https://web.stanford.edu/class/cs144/vm_howto/vm-howto-byo.html
 
 &nbsp;&nbsp; please switch branches to view the Lab 0 to Lab 7. 
 
